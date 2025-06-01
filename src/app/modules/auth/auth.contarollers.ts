@@ -20,23 +20,22 @@ const registerUser: RequestHandler = catchAsync(async (req, res) => {
 const loginUser: RequestHandler = catchAsync(async (req, res) => {
   const result = await authServices.loginUserIntoDB(req.body);
 
-  const { accessToken } = result;
+  const { accessToken, rememberMe } = result;
   // console.log({ accessToken, refreshToken });
 
   res.cookie('accessToken', accessToken, {
     secure: config.node_env === 'production',
     httpOnly: true,
+    domain: '.localhost',
     sameSite: 'lax',
-    maxAge: 1000 * 60 * 60 * 24 * 365,
+    maxAge: rememberMe ? 1000 * 60 * 60 * 24 * 7 : 1000 * 60 * 30,
   });
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Login Successfully!',
-    data: {
-      accessToken,
-    },
+    data: null,
   });
 });
 

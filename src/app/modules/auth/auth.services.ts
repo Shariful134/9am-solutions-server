@@ -60,11 +60,11 @@ const loginUserIntoDB = async (payload: TUserLogin) => {
   //   jwtPayload,
   //   config.jwt_refresh_secret as string,
   //   {
-  //     expiresIn: '30d',
+  //     expiresIn: rememberMe ? '7d' : '30m',
   //   },
   // );
 
-  return { accessToken };
+  return { accessToken, rememberMe };
 };
 
 //login User
