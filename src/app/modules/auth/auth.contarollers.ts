@@ -19,8 +19,9 @@ const registerUser: RequestHandler = catchAsync(async (req, res) => {
 //login User
 const loginUser: RequestHandler = catchAsync(async (req, res) => {
   const result = await authServices.loginUserIntoDB(req.body);
-
-  const { accessToken, rememberMe } = result;
+  const { rememberMe } = req.body;
+  const { accessToken } = result;
+  console.log('Rememberme :', rememberMe);
   // console.log({ accessToken, refreshToken });
 
   res.cookie('accessToken', accessToken, {
@@ -35,7 +36,9 @@ const loginUser: RequestHandler = catchAsync(async (req, res) => {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Login Successfully!',
-    data: null,
+    data: {
+      accessToken,
+    },
   });
 });
 
