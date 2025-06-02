@@ -17,10 +17,6 @@ router.post(
   validateRequest(authValidations.loginValidationschema),
   authContarollers.loginUser,
 );
-// router.post(
-//   '/refresh-token',
-//   validateRequest(authValidations.refreshTokenValidationSchema),
-//   authContarollers.refreshToken,
-// );
+router.get('/get-user/:id', authContarollers.getUser);
 
 export const authRoutes = router;

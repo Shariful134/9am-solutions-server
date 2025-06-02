@@ -58,8 +58,19 @@ const loginUserIntoDB = async (payload: TUserLogin) => {
 
   return { accessToken, rememberMe };
 };
+//find user
+const getUserIntoDB = async (id: string) => {
+  const user = await User.findById(id);
+
+  //checking user is exists
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, 'User not found');
+  }
+  return user;
+};
 
 export const authServices = {
   registerUserIntoDB,
   loginUserIntoDB,
+  getUserIntoDB,
 };

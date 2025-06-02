@@ -42,20 +42,20 @@ const loginUser: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
-//refresh token create
-// const refreshToken = catchAsync(async (req, res, next) => {
-//   const { refreshToken } = req.cookies;
-//   const result = await authServices.refreshTokenIntoDB(refreshToken);
-
-//   sendResponse(res, {
-//     statusCode: StatusCodes.OK,
-//     success: true,
-//     message: 'Access token is retrieved succesfully!',
-//     data: result,
-//   });
-// });
+//getUserIntoDb
+const getUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const result = await authServices.getUserIntoDB(id);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User retrieved succesfully!',
+    data: result,
+  });
+});
 
 export const authContarollers = {
   registerUser,
   loginUser,
+  getUser,
 };
