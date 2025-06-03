@@ -14,10 +14,14 @@ app.use(cookiePerser());
 app.use(
   cors({
     origin: ['http://localhost:5173'],
-    // origin: ['https://frontend-alpha-red-90.vercel.app/'],
     credentials: true,
   }),
 );
+// origin: ['https://*.yourdomain.com.frontend-alpha-red-90.vercel.app/'],
+// origin: [
+//   'https://frontend-alpha-red-90.vercel.app',
+//   'https://*.frontend-alpha-red-90.vercel.app',
+// ],
 
 //application routes
 app.use('/api/v1/', router);
