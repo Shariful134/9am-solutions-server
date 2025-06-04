@@ -60,20 +60,25 @@ JWT_REFRESH_SECRET = 091b2c529dec033b5ff4531e622ea3f93170e045222963319662b7e4a34
 Runs the backend server on http://localhost:5000
 
 📡 API Documentation
-Auth Routes (/api/auth)
+---
+Auth Routes (/api/v1/auth)
+---
 📥 Signup
-POST /api/auth/signup
+
+POST /api/v1/auth/register
 
 Body:
 
 json
 Copy
 Edit
+``` bash
 {
   "username": "johndoe",
   "password": "Secure@123",
   "shops": ["beautyhub", "grocerypoint", "techstore"]
 }
+``` bash
 Validations:
 
 Password must be at least 8 characters, include a number & special character.
@@ -81,32 +86,30 @@ Password must be at least 8 characters, include a number & special character.
 Shops must be 3+ and globally unique.
 
 🔓 Signin
-POST /api/auth/signin
-
+``` bash
+POST /api/v1/auth/login
+``` bash
 Body:
 
 json
 Copy
 Edit
+ ``` bash
 {
   "username": "johndoe",
   "password": "Secure@123",
   "rememberMe": true
 }
+``` bash
 Responses:
 
 Sets an httpOnly cookie with JWT.
 
 Session TTL: 30m (default), 7d (if rememberMe is true)
 
-🚪 Logout
-POST /api/auth/logout
-
 Clears the auth token from the cookie.
 
-👤 User Routes (/api/user)
-🔐 Get Profile
-GET /api/user/profile
+
 Auth required
 
 Returns:
