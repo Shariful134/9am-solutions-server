@@ -54,8 +54,29 @@ const getUser = catchAsync(async (req, res, next) => {
   });
 });
 
+//safed token
+const safedToken = catchAsync(async (req, res, next) => {
+  const token = req.cookies.accessToken;
+  const { shop } = req.body;
+  console.log('token and shop: ', token, shop);
+
+  res.cookie('accessToken', token, {
+    secure: config.node_env === 'production',
+    httpOnly: true,
+    domain: '.localhost',
+    sameSite: 'lax',
+  });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User retrieved succesfully!',
+    data: null,
+  });
+});
+
 export const authContarollers = {
   registerUser,
   loginUser,
   getUser,
+  safedToken,
 };

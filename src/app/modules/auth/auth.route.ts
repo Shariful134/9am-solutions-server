@@ -17,6 +17,8 @@ router.post(
   validateRequest(authValidations.loginValidationschema),
   authContarollers.loginUser,
 );
+
+router.post('/saved-token', authContarollers.safedToken);
 router.get('/get-user/:id', authContarollers.getUser);
 
 export const authRoutes = router;

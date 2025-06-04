@@ -58,6 +58,7 @@ const loginUserIntoDB = async (payload: TUserLogin) => {
 
   return { accessToken, rememberMe };
 };
+
 //find user
 const getUserIntoDB = async (id: string) => {
   const user = await User.findById(id);
