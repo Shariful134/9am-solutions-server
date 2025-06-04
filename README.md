@@ -66,12 +66,6 @@ Auth Routes (/api/v1/auth)
 📥 Signup
 
 POST /api/v1/auth/register
-
-Body:
-
-json
-Copy
-Edit
 ``` bash
 {
   "username": "johndoe",
@@ -79,6 +73,7 @@ Edit
   "shops": ["beautyhub", "grocerypoint", "techstore"]
 }
 ``` bash
+
 Validations:
 
 Password must be at least 8 characters, include a number & special character.
@@ -86,14 +81,13 @@ Password must be at least 8 characters, include a number & special character.
 Shops must be 3+ and globally unique.
 
 🔓 Signin
+
 ``` bash
 POST /api/v1/auth/login
 ``` bash
+
 Body:
 
-json
-Copy
-Edit
  ``` bash
 {
   "username": "johndoe",
@@ -101,6 +95,7 @@ Edit
   "rememberMe": true
 }
 ``` bash
+
 Responses:
 
 Sets an httpOnly cookie with JWT.
