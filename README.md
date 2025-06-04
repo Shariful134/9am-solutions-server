@@ -1,112 +1,143 @@
-🚀 MERN Auth App – Frontend (React + Vite)
-This is the frontend of the MERN Stack Authentication & Authorization project. It includes user registration, login, profile dashboard, and dynamic subdomain-based shop dashboards — built with React, Vite, and Redux Toolkit.
+🚀 MERN Auth App – Backend (mongodb , express.js) This is the frontend of the MERN Stack Authentication & Authorization project. It includes user registration, login, profile dashboard, and dynamic subdomain-based shop dashboards — built with React, Vite, and Redux Toolkit.
+---
 
-🌐 Live Demo
-🔗 Live Frontend URL
-🔗 Live Backend URL
+🚀 Features
+🔐 Secure Signup/Login with validation
 
-Replace with your actual hosted URLs
+🔁 Sessions with JWT and cookie-based auth
 
-✅ Features
-👤 User Authentication
-User Signup with:
+🔒 Passwords hashed with bcrypt
 
-Username
+🌐 Unique shop names globally
 
-Password (min 8 chars, 1 number, 1 special character)
+✅ JWT session persistence across subdomains
 
-3–4 unique shop names
+⏰ Auto-expiry based on "Remember Me"
 
-Shop name validation: globally unique
+⚙️ RESTful API with proper status codes
 
-Login with "Remember Me" option
+📦 Clean modular structure using MVC
 
-If checked: 7-day session
+🛠️ Setup Instructions
+Prerequisites
+Node.js (v18+ recommended)
 
-Else: 30-minute session
+MongoDB instance (local or cloud)
 
-Session stored via HTTP-only cookies
+.env file with necessary configuration
 
-🧑‍💻 Dashboard (Profile Feature)
-Displays username and list of user’s shops
-
-Logout with confirmation popup
-
-Navigation sidebar with user avatar
-
-🏪 Dynamic Subdomain-based Shop Dashboard
-Clicking a shop opens:
-
-cpp
-Copy
-Edit
-http://<shopname>.localhost:5173
-Example:
-
-arduino
-Copy
-Edit
-http://beautyhub.localhost:5173
-Each subdomain shows:
-
-arduino
-Copy
-Edit
-"This is beautyhub shop"
-Cross-subdomain authentication via cookie & Redux token sync
-
-Spinner shown while verifying token on subdomains
-
-If token is invalid or missing: shows “Unauthorized”
-
-⚙️ Setup Instructions
-1️⃣ Install Dependencies
-bash
-Copy
-Edit
-cd client
+ ## Backend Setup
+1.Install All dependencies:
+```bash
 npm install
-2️⃣ Create .env File
-Create a .env file in client/ based on .env.example.
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+3.Start the build your code:
+``` bash
+npm run build
+```
+4.Start the development Backend:
+``` bash
+npm run start:dev
+```
 
-Example .env
-env
-Copy
-Edit
-VITE_API_BASE_URL=http://localhost:5000/api/v1
-3️⃣ Run Development Server
-bash
-Copy
-Edit
-npm run dev
-If using subdomains on localhost, be sure to update your system's hosts file:
+5.create .env file:
+``` bash
+NODE_ENV=development
+PORT=5000
 
-🧠 Add to your hosts file:
+DATABASE_URL=mongodb+srv://task-submission:UnQtmo1wXtEbjDUu@cluster0.gc7k6.mongodb.net/9AM-SOLUTION?retryWrites=true&w=majority&appName=Cluster0
+BCRYPT_SALT_ROUNDS=12
+JWT_ACCESS_SECRET = 41b991b21dc0a439cb45fed544992ba3fafa3f912d3c4dedebec3592d7d552fb74a86a4d69ea560bcf7bf988d173ddecaffa9815dd5a6661bcacd58c0cdb2dc5
+JWT_REFRESH_SECRET = 091b2c529dec033b5ff4531e622ea3f93170e045222963319662b7e4a34f0cdd
+
+```
+Runs the backend server on http://localhost:5000
+
+📡 API Documentation
+Auth Routes (/api/auth)
+📥 Signup
+POST /api/auth/signup
+
+Body:
+
+json
 Copy
 Edit
-127.0.0.1 beautyhub.localhost
-127.0.0.1 grocerypoint.localhost
-🛡️ Tech Stack
-Technology	Description
-React	Frontend framework
-Vite	Build tool and dev server
-TypeScript	Strong typing
-Redux Toolkit	Global state management
-React Router	Routing and navigation
-JWT	Token-based auth
-HTTP-only Cookies	Secure token storage
-Lucide Icons	Icon components
+{
+  "username": "johndoe",
+  "password": "Secure@123",
+  "shops": ["beautyhub", "grocerypoint", "techstore"]
+}
+Validations:
+
+Password must be at least 8 characters, include a number & special character.
+
+Shops must be 3+ and globally unique.
+
+🔓 Signin
+POST /api/auth/signin
+
+Body:
+
+json
+Copy
+Edit
+{
+  "username": "johndoe",
+  "password": "Secure@123",
+  "rememberMe": true
+}
+Responses:
+
+Sets an httpOnly cookie with JWT.
+
+Session TTL: 30m (default), 7d (if rememberMe is true)
+
+🚪 Logout
+POST /api/auth/logout
+
+Clears the auth token from the cookie.
+
+👤 User Routes (/api/user)
+🔐 Get Profile
+GET /api/user/profile
+Auth required
+
+Returns:
+
+json
+Copy
+Edit
+{
+  "username": "johndoe",
+  "shops": ["beautyhub", "grocerypoint", "techstore"]
+}
+🛡️ Security Notes
+JWT stored in secure httpOnly, SameSite=None, Secure cookies
+
+Passwords hashed with bcrypt
+
+Unique shop names enforced using indexed field + server-side validation
+
+Middleware verifies JWT on all protected routes and across subdomains
+
+🌐 Cross-Subdomain Auth
+To preserve sessions across subdomains (e.g., beautyhub.localhost):
+
+Set cookies with:
+Domain=.localhost; SameSite=None; Secure
+
+Backend sends the cookie with each response
+
+JWT middleware parses and validates token on each subdomain access
 
 🧪 Testing
-Manual testing on different flows:
+You can use Postman or REST Client to test endpoints.
 
-Register with duplicate shop names: ❌ error shown
-
-Login/logout and open subdomain in new tab: ✅ token persists
-
-Expired token: 🔐 auto logout
-
-📂 Backend Repo
-🔗 Backend GitHub Repository
-
-
+Make sure to set withCredentials: true in your frontend requests to handle cookies properly.
